@@ -186,7 +186,7 @@
     
  //   NSString *encodedText = [self encodeToPercentEscapeString:base64String];
     [self checkLoader];
-    tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"a.png",@"FileName",[base64String stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"FileContent",nil];
+    tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:FileName,@"FileName",[base64String stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"FileContent",nil];
     NSLog(@"tempdic=%@",tempDict);
     NSString *loginstring = [NSString stringWithFormat:@"%@UploadFile/%@?CustomerCode=%@",URL_LINK,AuthToken,CustomerCode];
     //    NSString *loginstring = [NSString stringWithFormat:@"%@InsertPortfolioDoc/%@?PortfolioCode=%@",URL_LINK,AuthToken,PortfolioCode];

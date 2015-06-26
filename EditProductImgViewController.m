@@ -1,19 +1,19 @@
 //
-//  EditProductDocViewController.m
+//  EditProductImgViewController.m
 //  CONGUA
 //
-//  Created by Priyanka ghosh on 25/06/15.
+//  Created by Priyanka ghosh on 26/06/15.
 //  Copyright (c) 2015 Sandeep Dutta. All rights reserved.
 //
 
-#import "EditProductDocViewController.h"
+#import "EditProductImgViewController.h"
 
-@interface EditProductDocViewController ()<UITextFieldDelegate,UITextViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
+@interface EditProductImgViewController ()<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 
 @end
 
-@implementation EditProductDocViewController
-@synthesize txtDocName,txtVwDesc,DocImage,lblDesc,lblDocType,btnDocType;
+@implementation EditProductImgViewController
+@synthesize WebView,ProductImgView,lblDesc,txtVwDesc,mainscroll,btnImg,cameraImg;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -21,9 +21,9 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     CustomerCode=[prefs valueForKey:@"CustomerCode"];
     AuthToken=[prefs valueForKey:@"AuthToken"];
-    ProductDocCode=[prefs valueForKey:@"ProductDocCode"];
+    ProductImgCode=[prefs valueForKey:@"ProductImgCode"];
     ProductCode=[prefs valueForKey:@"ProductCode"];
-    NSLog(@"product doc code=%@",ProductDocCode);
+    NSLog(@"product img code=%@",ProductImgCode);
     
     urlobj=[[UrlconnectionObject alloc]init];
     
@@ -33,25 +33,19 @@
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,18, 20)];
-    txtDocName.leftView = paddingView;
-    txtDocName.leftViewMode = UITextFieldViewModeAlways;
     
-    ArrDocType=[[NSMutableArray alloc]initWithObjects:@"Purchase Receipt",@"Insurance Certificate",@"Others",nil];
-    
-    txtDocName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Document Name" attributes:@{NSForegroundColorAttributeName: [UIColor grayColor]}];
     lblDesc.textColor=[UIColor grayColor];
-    lblDocType.textColor=[UIColor grayColor];
+   
     
-    [self DocumentViewUrl];
+    [self ImageViewUrl];
 }
--(void)DocumentViewUrl
+-(void)ImageViewUrl
 {
     @try {
         
         
         
-        NSString *str=[NSString stringWithFormat:@"%@GetProductDocInfoDetail/%@?ProductCode=%@&ProductDocCode=%@",URL_LINK,AuthToken,ProductCode,ProductDocCode];
+        NSString *str=[NSString stringWithFormat:@"%@GetProductImageInfoDetail/%@?ProductCode=%@&ProductImageCode=%@",URL_LINK,AuthToken,ProductCode,ProductImgCode];
         NSLog(@"str=%@",str);
         BOOL net=[urlobj connectedToNetwork];
         if (net==YES) {
@@ -67,24 +61,22 @@
                      }
                      */
                     
-                    txtDocName.text=[[result objectForKey:@"ResultInfo"] valueForKey:@"DocName"];
+                   
                     
                     txtVwDesc.text=[[result objectForKey:@"ResultInfo"] valueForKey:@"Description"];
                     lblDesc.hidden=YES;
                     
-                    //       FileName=[NSString stringWithFormat:@"%@",[[result objectForKey:@"ResultInfo"] valueForKey:@"FileName"]];
-                    
-                    lblDocType.textColor=[UIColor blackColor];
-                    if ([[[result objectForKey:@"ResultInfo"] valueForKey:@"DocTypeCode"] integerValue] ==1) {
-                        lblDocType.text=@"Purchase Receipt";
+                          FileName=[NSString stringWithFormat:@"%@",[[result objectForKey:@"ResultInfo"] valueForKey:@"FileName"]];
+                    if (FileName.length==0)
+                    {
+                        
                     }
-                    else if ([[[result objectForKey:@"ResultInfo"] valueForKey:@"DocTypeCode"] integerValue] ==2) {
-                        lblDocType.text=@"Insurance Certificate";
+                    else
+                    {
+                        //  WebView.hidden=NO;
+                        [self DownloadUrl];
                     }
-                    else if ([[[result objectForKey:@"ResultInfo"] valueForKey:@"DocTypeCode"] integerValue] ==99) {
-                        lblDocType.text=@"Others";
-                    }
-                    
+                  
                     
                     
                 }
@@ -123,15 +115,37 @@
     
     
 }
+-(void)DownloadUrl
+{
+    @try {
+        
+        //  FileName=@"34.png";
+        NSString *str=[NSString stringWithFormat:@"%@DownloadFile/%@?CustomerCode=%@&FileName=%@",URL_LINK,AuthToken,CustomerCode,FileName];
+        NSLog(@"str=%@",str);
+        
+        
+        NSURL *url = [NSURL URLWithString:str];
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+        [WebView loadRequest:requestObj];
+        
+        
+    }
+    @catch (NSException *exception)
+    {
+    }
+    @finally {
+        
+    }
+    
+    
+    
+    
+}
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     
@@ -139,7 +153,7 @@
     if(textView==txtVwDesc)
     {
         lblDesc.hidden=YES;
-        // [mainscroll setContentOffset:CGPointMake(0.0f,170.0f) animated:YES];
+       //  [mainscroll setContentOffset:CGPointMake(0.0f,170.0f) animated:YES];
     }
     
 }
@@ -151,7 +165,7 @@
         [textView resignFirstResponder];
         if(textView==txtVwDesc)
         {
-            //  [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f) animated:YES];
+           //   [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f) animated:YES];
             
             if (txtVwDesc.text.length==0)
             {
@@ -182,84 +196,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)AddDocClick:(id)sender
-{
-    [txtVwDesc resignFirstResponder];
-    actionsheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
-    [actionsheet showInView:self.view];
-
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.delegate = (id)self;
-    picker.allowsEditing = YES;
-    
-    switch (buttonIndex) {
-            
-        case 0:
-            
-            
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self.navigationController presentViewController:picker animated:YES completion:NULL];
-            
-            break;
-            
-        case 1:
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self.navigationController presentViewController:picker animated:YES completion:NULL];
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    
-    DocImage.image=info[UIImagePickerControllerEditedImage];
-    DocImage.contentMode = UIViewContentModeScaleAspectFill;
-    DocImage.clipsToBounds=YES;
-    
-    [DocImage setUserInteractionEnabled:YES];
-    
-    
-    
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    
-    
-}
 - (IBAction)SubmitClick:(id)sender
 {
-    if ([lblDocType.text isEqualToString:@"Purchase Receipt"]) {
-        DocType1=@"1";
-    }
-    else if ([lblDocType.text isEqualToString:@"Insurance Certificate"]) {
-        DocType1=@"2";
-    }
-    else if ([lblDocType.text isEqualToString:@"Others"]) {
-        DocType1=@"99";
-    }
-    if(txtDocName.text.length==0)
+    if(txtVwDesc.text.length==0)
     {
-        txtDocName.text=@"";
-        txtDocName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Enter Document Name" attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
-        //  [Main_acroll setContentOffset:CGPointMake(0,0) animated:YES];
+        lblDesc.text=@"Enter Description";
+        lblDesc.textColor=[UIColor redColor];
     }
     
-    else if (lblDocType.text.length==0 || [lblDocType.text isEqualToString:@"Document Type"])
+    //   else if([ProductImg.image isEqual:[UIImage imageNamed:@"doc"]])
+    else if(ProductImgView.image==nil)
     {
-        lblDocType.text=@"Document Type";
-        lblDocType.textColor=[UIColor redColor];
-    }
-    //   else if([DocImage.image isEqual:[UIImage imageNamed:@"doc"]])
-    else if(DocImage.image==nil)
-    {
-        UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please Add Document" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please Add Image" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [aler show];
     }
     
@@ -278,23 +226,23 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
     NSString *currentTime = [dateFormatter stringFromDate:today];
-    FileName=[NSString stringWithFormat:@"%@%@%@",@"ProductDoc",currentTime,@".png"];
+    FileName=[NSString stringWithFormat:@"%@%@%@",@"ProductImg",currentTime,@".png"];
     //[@"PortDoc" stringByAppendingString:currentTime];
     NSLog(@"time=%@",FileName);
     
     //image upload
-    CGSize size = DocImage.image.size;
+    CGSize size = ProductImgView.image.size;
     CGFloat ratio = 0;
     if (size.width > size.height) {
-        ratio = 600.0 / size.width;
+        ratio = 200.0 / size.width;
     }
     else {
-        ratio = 600.0 / size.height;
+        ratio = 200.0 / size.height;
     }
     CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
     
     UIGraphicsBeginImageContext(rect.size);
-    [DocImage.image drawInRect:rect];
+    [ProductImgView.image drawInRect:rect];
     UIImage *thumbnail = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     NSData *imageData = UIImageJPEGRepresentation(thumbnail,1.0f);
@@ -345,7 +293,7 @@
             if ([[result valueForKey:@"IsSuccess"] integerValue]==1) {
                 
                 FileName=[NSString stringWithFormat:@"%@",[result valueForKey:@"ResultInfo"]];
-                [self SubmitDocUrl];
+                [self SubmitProductImageUrl];
                 
             }
             else if ([[result valueForKey:@"Description"] isEqualToString:@"AuthToken has expired."])
@@ -372,21 +320,14 @@
     
     
 }
--(NSString*) encodeToPercentEscapeString:(NSString *)string {
-    return (NSString *)
-    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                              (CFStringRef) string,
-                                                              NULL,
-                                                              (CFStringRef) @"!*'();:@&=+$,/?%#[]",
-                                                              kCFStringEncodingUTF8));
-}
--(void)SubmitDocUrl
+-(void)SubmitProductImageUrl
 {
     
-    tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:ProductDocCode,@"ProductDocCode",txtDocName.text , @"DocName",DocType1, @"DocTypeCode",txtVwDesc.text,@"Description",FileName,@"FileName",ProductCode,@"ProductCode",nil];
-    NSLog(@"tempdic=%@",tempDict);
     
-    NSString *loginstring = [NSString stringWithFormat:@"%@UpdateProductDoc/%@?ProductCode=%@",URL_LINK,AuthToken,ProductCode];
+    [self checkLoader];
+    tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:ProductImgCode,@"ProductImageCode",txtVwDesc.text,@"Description",FileName,@"FileName",ProductCode,@"ProductCode",nil];
+    NSLog(@"tempdic=%@",tempDict);
+    NSString *loginstring = [NSString stringWithFormat:@"%@UpdateProductImage/%@?ProductCode=%@",URL_LINK,AuthToken,ProductCode];
     
     NSLog(@"--- %@",loginstring);
     
@@ -426,7 +367,7 @@
                 
                 
                 [self checkLoader];
-                UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Success" message:@"Document Updated Successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Success" message:@"Image Updated Successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [aler show];
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -447,7 +388,7 @@
         }];
     }
     else{
-        [self checkLoader];
+        
         UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"No Network Connection." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [aler show];
     }
@@ -481,115 +422,55 @@
         [self.view addSubview:loader_shadow_View];
     }
 }
-- (IBAction)DocTypeClick:(id)sender
+- (IBAction)ImageClick:(id)sender
 {
-    [txtDocName resignFirstResponder];
-    if (btnDocType.selected==NO)
-    {
-        btnDocType.selected=YES;
-        //    [mainscroll setContentOffset:CGPointMake(0,priceview.frame.origin.y+50) animated:YES];
-        [Doctypeview removeFromSuperview];
-        
-        Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width,self.view.frame.size.height)];
-        [Doctypeview setBackgroundColor:[[UIColor blackColor]colorWithAlphaComponent:0.8]];
-        [self.view addSubview:Doctypeview];
-        
-        
-        
-        //picker create
-        
-        Doctypepicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-125, 180, 250,150)];
-        //   amtpicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, 50, self.view.frame.size.width,150)];
-        Doctypepicker.delegate=self;
-        Doctypepicker.dataSource=self;
-        [Doctypepicker setBackgroundColor:[UIColor whiteColor]];
-        [Doctypeview addSubview:Doctypepicker];
-        
-        btnDoctypesave=[[UIButton alloc] initWithFrame:CGRectMake(Doctypepicker.frame.origin.x+Doctypepicker.frame.size.width-50, Doctypepicker.frame.origin.y-50, 50, 50)];
-        [btnDoctypesave setTitle:@"Save" forState:UIControlStateNormal];
-        btnDoctypesave.backgroundColor = [UIColor clearColor];
-        [btnDoctypesave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
-        btnDoctypesave.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
-        [btnDoctypesave addTarget:self action:@selector(DoctypepickerChange) forControlEvents:UIControlEventTouchUpInside];
-        [Doctypeview addSubview:btnDoctypesave];
-        
-        btnDoctypeCancel=[[UIButton alloc] initWithFrame:CGRectMake(Doctypepicker.frame.origin.x, Doctypepicker.frame.origin.y-50, 60, 50)];
-        [btnDoctypeCancel setTitle:@"Cancel" forState:UIControlStateNormal];
-        btnDoctypeCancel.backgroundColor = [UIColor clearColor];
-        [btnDoctypeCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
-        btnDoctypeCancel.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
-        [btnDoctypeCancel addTarget:self action:@selector(DoctypepickerCancel) forControlEvents:UIControlEventTouchUpInside];
-        [Doctypeview addSubview:btnDoctypeCancel];
-        
-    }
-    else
-    {
-        btnDocType.selected=NO;
-        [Doctypeview removeFromSuperview];
-        
-    }
+    [txtVwDesc resignFirstResponder];
+    actionsheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    [actionsheet showInView:self.view];
 
 }
--(void)DoctypepickerCancel
-{
-    btnDocType.selected=NO;
-    [Doctypeview removeFromSuperview];
-}
--(void)DoctypepickerChange
-{
-    
-    if (DocType.length==0) {
-        
-        lblDocType.text=[ArrDocType objectAtIndex:0];
-    }
-    else
-    {
-        lblDocType.text=DocType;
-    }
-    lblDocType.textColor=[UIColor blackColor];
-    DocType=@"";
-    btnDocType.selected=NO;
-    [Doctypeview removeFromSuperview];
-}
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if(pickerView==Doctypepicker)
-    {
-        return ArrDocType.count;
-    }
-    else
-    {
-        return 0;
-    }
-}
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if(pickerView==Doctypepicker)
-    {
-        return ArrDocType[row];
-    }
-    else
-    {
-        return @"";
-    }
-    
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    if(pickerView==Doctypepicker){
-        
-        DocType= ArrDocType[row];
-        lblDocType.textColor=[UIColor blackColor];
-    }
-    
-    else
-    {
-        
-    }
-}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = (id)self;
+    picker.allowsEditing = YES;
+    
+    switch (buttonIndex) {
+            
+        case 0:
+            
+            
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self.navigationController presentViewController:picker animated:YES completion:NULL];
+            
+            break;
+            
+        case 1:
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self.navigationController presentViewController:picker animated:YES completion:NULL];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    ProductImgView.image=info[UIImagePickerControllerEditedImage];
+    ProductImgView.contentMode = UIViewContentModeScaleAspectFill;
+    ProductImgView.clipsToBounds=YES;
+    
+    [ProductImgView setUserInteractionEnabled:YES];
+    
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    
+    
+    
+}
 @end

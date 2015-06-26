@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UrlconnectionObject.h"
 #import "login.h"
+#import "EditProductImgViewController.h"
 @interface ProductImgDetailViewController : UIViewController
 {
     NSString *CustomerCode,*AuthToken,*ProductCode,*FileName;
@@ -18,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
 @property (strong, nonatomic)  NSString *ProductImgCode;
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
+@property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
+
+
+
 
 - (IBAction)DeleteClick:(id)sender;
 - (IBAction)EditClick:(id)sender;
