@@ -152,10 +152,10 @@
                     txtVwDescription.text=[NSString stringWithFormat:@"%@",[[result objectForKey:@"ResultInfo"] valueForKey:@"Description"]];
                     if (txtVwDescription.text.length==0)
                     {
-                        lblDescription.hidden=NO;
+                      //  lblDescription.hidden=NO;
                     }
                     else{
-                        lblDescription.hidden=YES;
+                     //   lblDescription.hidden=YES;
                     }
                     
                 }
@@ -584,7 +584,7 @@
         Isotherinsured=@"0";
         txtVwDescription.text=@"";
         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f) animated:YES];
-        lblDescription.hidden=NO;
+     //   lblDescription.hidden=NO;
       //  lblDescription.textColor=[UIColor blackColor];
         
         // hide desc

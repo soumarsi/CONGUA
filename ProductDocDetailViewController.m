@@ -152,7 +152,7 @@
     }
     else
     {
-        WebView.hidden=NO;
+      //  WebView.hidden=NO;
         [self DownloadUrl];
     }
 
@@ -165,10 +165,10 @@
         NSString *str=[NSString stringWithFormat:@"%@DownloadFile/%@?CustomerCode=%@&FileName=%@",URL_LINK,AuthToken,CustomerCode,FileName];
         NSLog(@"str=%@",str);
         
-        
-        NSURL *url = [NSURL URLWithString:str];
-        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        [WebView loadRequest:requestObj];
+         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    //    NSURL *url = [NSURL URLWithString:str];
+    //    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    //    [WebView loadRequest:requestObj];
         
         /*
          BOOL net=[urlobj connectedToNetwork];

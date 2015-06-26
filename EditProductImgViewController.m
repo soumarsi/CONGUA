@@ -204,8 +204,8 @@
         lblDesc.textColor=[UIColor redColor];
     }
     
-    //   else if([ProductImg.image isEqual:[UIImage imageNamed:@"doc"]])
-    else if(ProductImgView.image==nil)
+     else if([ProductImgView.image isEqual:[UIImage imageNamed:@"PlaceholderImg"]])
+ //   else if(ProductImgView.image==nil)
     {
         UIAlertView *aler=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please Add Image" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [aler show];
@@ -460,7 +460,7 @@
 {
     
     ProductImgView.image=info[UIImagePickerControllerEditedImage];
-    ProductImgView.contentMode = UIViewContentModeScaleAspectFill;
+    ProductImgView.contentMode = UIViewContentModeScaleAspectFit;
     ProductImgView.clipsToBounds=YES;
     
     [ProductImgView setUserInteractionEnabled:YES];

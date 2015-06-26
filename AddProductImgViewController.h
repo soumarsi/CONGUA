@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *txtvwDesc;
 @property (weak, nonatomic) IBOutlet UIImageView *ProductImg;
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
+@property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
+
 - (IBAction)AddImageClk:(id)sender;
 - (IBAction)SubmitClk:(id)sender;
 - (IBAction)BackClk:(id)sender;

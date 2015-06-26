@@ -87,6 +87,7 @@
                     
                     lblTitle.text=[[result objectForKey:@"ResultInfo"] valueForKey:@"PortfolioName"];
                     [[NSUserDefaults standardUserDefaults] setObject:[[result valueForKey:@"ResultInfo"] valueForKey:@"PortfolioName"]  forKey:@"PortfolioName"];
+                    [[NSUserDefaults standardUserDefaults] setObject:[[result valueForKey:@"ResultInfo"] valueForKey:@"PortfolioTypeCode"]  forKey:@"PortfolioTypeCode"];
                     [[NSUserDefaults standardUserDefaults] setObject:[[result valueForKey:@"ResultInfo"] valueForKey:@"Address1"]  forKey:@"Address1"];
                     lbladdress.text=[[result objectForKey:@"ResultInfo"] valueForKey:@"Address1"];
                     lblNoOfItem.text=[NSString stringWithFormat:@"%@",[[result objectForKey:@"ResultInfo"] valueForKey:@"ProductCount"]];
@@ -295,7 +296,7 @@
     static NSString *cellid=@"PortfolioDocCell";
     
     PortfolioDocCell *cell=(PortfolioDocCell *)[tableView dequeueReusableCellWithIdentifier:cellid];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
  
     cell.lblDocName.text=[[ArrDoc objectAtIndex:indexPath.row] valueForKey:@"DocName"];
     

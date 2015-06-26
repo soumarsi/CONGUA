@@ -32,19 +32,21 @@
     lblportfilioName.text=[prefs valueForKey:@"PortfolioName"];
     lblAddress.text=[prefs valueForKey:@"Address1"];
     lblUserName.text=[@"Welcome " stringByAppendingString:[prefs valueForKey:@"FullName"]];
-    if ([[prefs valueForKey:@"PortfolioName"] isEqualToString:@"Home Contents"]) {
+    
+    if ([[prefs valueForKey:@"PortfolioTypeCode"] integerValue] ==1) {
         logoimage.image=[UIImage imageNamed:@"home"];
     }
-    else if ([[prefs valueForKey:@"PortfolioName"] isEqualToString:@"Business Contents"]) {
+    else if ([[prefs valueForKey:@"PortfolioTypeCode"] integerValue] ==2) {
         logoimage.image=[UIImage imageNamed:@"business"];
     }
-    else if ([[prefs valueForKey:@"PortfolioName"] isEqualToString:@"Personal Contents"]) {
+    else if ([[prefs valueForKey:@"PortfolioTypeCode"] integerValue] ==3) {
         logoimage.image=[UIImage imageNamed:@"personal"];
     }
-    else if ([[prefs valueForKey:@"PortfolioName"] isEqualToString:@"Other Contents"]) {
+    else if ([[prefs valueForKey:@"PortfolioTypeCode"] integerValue] ==4) {
         logoimage.image=[UIImage imageNamed:@"other"];
     }
 
+   
     urlobj=[[UrlconnectionObject alloc]init];
     ArrCategory=[[NSMutableArray alloc]init];
     ArrProduct=[[NSMutableArray alloc]init];
@@ -214,7 +216,7 @@
     
     static NSString *cellid=@"portfolioitemprototyoecell";
     portfolioitemprototypecell *cell=(portfolioitemprototypecell *)[tableView dequeueReusableCellWithIdentifier:cellid];
- 
+ cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (ArrShowProduct.count>0)
     {
         cell.framelbl.text=[NSString stringWithFormat:@"%@",[[ArrShowProduct objectAtIndex:indexPath.row] valueForKey:@"ProductName"]];
@@ -304,7 +306,8 @@
        showAllSections=YES;
     }
     */
-    
+    [UIView animateWithDuration:0.5 animations:^{
+        
     if(!showAllSections){
         
         showAllSections=YES;
@@ -343,9 +346,13 @@
         sender.selected=NO;
     }
    
-    tappedRow = sender.tag;
-  //  NSLog(@"tag=========================================%ld",(long)tappedRow);
-    [mytabview reloadData];
+    } completion:^(BOOL finished) {
+        
+        tappedRow = sender.tag;
+        //  NSLog(@"tag=========================================%ld",(long)tappedRow);
+        [mytabview reloadData];
+    }];
+   
     
  
 }

@@ -13,7 +13,7 @@
 @end
 
 @implementation AddPortfolioDocViewController
-@synthesize mainscroll,btnDocType,txtDocName,txtvwDescription,lblDesc,lblDocType,DocImage;
+@synthesize mainscroll,btnDocType,txtDocName,txtvwDescription,lblDesc,lblDocType,DocImage,btnSubmit;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -247,10 +247,11 @@
 {
     
     DocImage.image=info[UIImagePickerControllerEditedImage];
-    DocImage.contentMode = UIViewContentModeScaleAspectFill;
+    DocImage.contentMode = UIViewContentModeScaleAspectFit;
     DocImage.clipsToBounds=YES;
+    btnSubmit.frame=CGRectMake(btnSubmit.frame.origin.x, DocImage.frame.origin.y+DocImage.frame.size.height+10, btnSubmit.frame.size.width, btnSubmit.frame.size.height);
     
-    [DocImage setUserInteractionEnabled:YES];
+ //   [DocImage setUserInteractionEnabled:YES];
     
     
     

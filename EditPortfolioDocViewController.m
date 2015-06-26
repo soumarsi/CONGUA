@@ -13,7 +13,7 @@
 @end
 
 @implementation EditPortfolioDocViewController
-@synthesize lblDocType,lblDesc,txtDocName,txtVwDesc,DocImage,mainscroll,btnDocType;
+@synthesize lblDocType,lblDesc,txtDocName,txtVwDesc,DocImage,mainscroll,btnDocType,btnsubmit;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -325,11 +325,11 @@
 {
     
     DocImage.image=info[UIImagePickerControllerEditedImage];
-    DocImage.contentMode = UIViewContentModeScaleAspectFill;
+    DocImage.contentMode = UIViewContentModeScaleAspectFit;
     DocImage.clipsToBounds=YES;
     
-    [DocImage setUserInteractionEnabled:YES];
-    
+  //  [DocImage setUserInteractionEnabled:YES];
+    btnsubmit.frame=CGRectMake(btnsubmit.frame.origin.x, DocImage.frame.origin.y+DocImage.frame.size.height+10, btnsubmit.frame.size.width, btnsubmit.frame.size.height);
     
     
     [picker dismissViewControllerAnimated:YES completion:nil];

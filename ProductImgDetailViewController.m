@@ -76,7 +76,7 @@
                     else
                     {
                       //  WebView.hidden=NO;
-                        [self DownloadUrl];
+                      //  [self DownloadUrl];
                     }
                     
                     

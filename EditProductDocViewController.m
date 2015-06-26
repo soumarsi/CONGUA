@@ -13,7 +13,7 @@
 @end
 
 @implementation EditProductDocViewController
-@synthesize txtDocName,txtVwDesc,DocImage,lblDesc,lblDocType,btnDocType;
+@synthesize txtDocName,txtVwDesc,DocImage,lblDesc,lblDocType,btnDocType,btnSubmit;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -220,11 +220,11 @@
 {
     
     DocImage.image=info[UIImagePickerControllerEditedImage];
-    DocImage.contentMode = UIViewContentModeScaleAspectFill;
+    DocImage.contentMode = UIViewContentModeScaleAspectFit;
     DocImage.clipsToBounds=YES;
     
-    [DocImage setUserInteractionEnabled:YES];
-    
+  //  [DocImage setUserInteractionEnabled:YES];
+    btnSubmit.frame=CGRectMake(btnSubmit.frame.origin.x, DocImage.frame.origin.y+DocImage.frame.size.height+10, btnSubmit.frame.size.width, btnSubmit.frame.size.height);
     
     
     [picker dismissViewControllerAnimated:YES completion:nil];

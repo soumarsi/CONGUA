@@ -13,7 +13,7 @@
 @end
 
 @implementation AddProductImgViewController
-@synthesize mainscroll,lblDesc,txtvwDesc,ProductImg;
+@synthesize mainscroll,lblDesc,txtvwDesc,ProductImg,btnSubmit;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -116,11 +116,11 @@
 {
     
     ProductImg.image=info[UIImagePickerControllerEditedImage];
-    ProductImg.contentMode = UIViewContentModeScaleAspectFill;
+    ProductImg.contentMode = UIViewContentModeScaleAspectFit;
     ProductImg.clipsToBounds=YES;
     
-    [ProductImg setUserInteractionEnabled:YES];
-    
+  //  [ProductImg setUserInteractionEnabled:YES];
+    btnSubmit.frame=CGRectMake(btnSubmit.frame.origin.x, ProductImg.frame.origin.y+ProductImg.frame.size.height+10, btnSubmit.frame.size.width, btnSubmit.frame.size.height);
     
     
     [picker dismissViewControllerAnimated:YES completion:nil];

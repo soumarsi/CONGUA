@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
 @property (weak, nonatomic) IBOutlet UITextView *txtVwDesc;
 @property (weak, nonatomic) IBOutlet UIButton *btnDocType;
+@property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *DocImage;

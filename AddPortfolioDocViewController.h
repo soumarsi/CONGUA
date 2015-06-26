@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *DocImage;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 
 
 - (IBAction)BackClk:(id)sender;
