@@ -13,7 +13,7 @@
 @end
 
 @implementation AddProductDocViewController
-@synthesize mainscroll,lblDesc,lblDocType,txtDocName,txtvwDescription,btnDocType,DocImage,btnsubmit;
+@synthesize mainscroll,lblDesc,lblDocType,txtDocName,txtvwDescription,btnDocType,DocImage,btnsubmit,btnAddDoc;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -101,36 +101,52 @@
     if (btnDocType.selected==NO)
     {
         btnDocType.selected=YES;
-        //    [mainscroll setContentOffset:CGPointMake(0,priceview.frame.origin.y+50) animated:YES];
+        if (btnAddDoc.selected==YES)
+        {
+            
+            if (self.view.frame.size.width==320)
+            {
+                [mainscroll setContentOffset:CGPointMake(0,130) animated:YES];
+            }
+            else
+            {
+                [mainscroll setContentOffset:CGPointMake(0,40) animated:YES];
+            }
+        }
+        else
+        {
+            [mainscroll setContentOffset:CGPointMake(0,10) animated:YES];
+        }
         [Doctypeview removeFromSuperview];
         
-        Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width,self.view.frame.size.height)];
-        [Doctypeview setBackgroundColor:[[UIColor blackColor]colorWithAlphaComponent:0.8]];
+        
+        //     Producttypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, btnSubmit.frame.origin.y+btnSubmit.frame.size.height+10, self.view.frame.size.width,200)];
+        //    NSLog(@"height=%f",self.view.frame.size.height-200);
+        Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.size.height-200, self.view.frame.size.width,200)];
+        [Doctypeview setBackgroundColor:[UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
         [self.view addSubview:Doctypeview];
         
         
         
         //picker create
         
-        Doctypepicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-125, 180, 250,150)];
+        Doctypepicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-125, 10, 250,150)];
         //   amtpicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, 50, self.view.frame.size.width,150)];
         Doctypepicker.delegate=self;
         Doctypepicker.dataSource=self;
         [Doctypepicker setBackgroundColor:[UIColor whiteColor]];
         [Doctypeview addSubview:Doctypepicker];
         
-        btnDoctypesave=[[UIButton alloc] initWithFrame:CGRectMake(Doctypepicker.frame.origin.x+Doctypepicker.frame.size.width-50, Doctypepicker.frame.origin.y-50, 50, 50)];
-        [btnDoctypesave setTitle:@"Save" forState:UIControlStateNormal];
-        btnDoctypesave.backgroundColor = [UIColor clearColor];
-        [btnDoctypesave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
+        btnDoctypesave=[[UIButton alloc] initWithFrame:CGRectMake(0,Doctypeview.frame.size.height-35.0,self.view.frame.size.width/2,35)];
+        btnDoctypesave.backgroundColor=[UIColor colorWithRed:(250.0f/255.0f) green:(58.0f/255.0f) blue:(47.0f/255.0f) alpha:1];
+        [btnDoctypesave setTitle: @"OK" forState: UIControlStateNormal];
         btnDoctypesave.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
         [btnDoctypesave addTarget:self action:@selector(DoctypepickerChange) forControlEvents:UIControlEventTouchUpInside];
         [Doctypeview addSubview:btnDoctypesave];
         
-        btnDoctypeCancel=[[UIButton alloc] initWithFrame:CGRectMake(Doctypepicker.frame.origin.x, Doctypepicker.frame.origin.y-50, 60, 50)];
-        [btnDoctypeCancel setTitle:@"Cancel" forState:UIControlStateNormal];
-        btnDoctypeCancel.backgroundColor = [UIColor clearColor];
-        [btnDoctypeCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
+        btnDoctypeCancel=[[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2,Doctypeview.frame.size.height-35,self.view.frame.size.width/2,35)];
+        btnDoctypeCancel.backgroundColor=[UIColor colorWithRed:(20.0f/255.0f) green:(123.0f/255.0f) blue:(250.0f/255.0f) alpha:1];
+        [btnDoctypeCancel setTitle: @"CANCEL" forState: UIControlStateNormal];
         btnDoctypeCancel.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
         [btnDoctypeCancel addTarget:self action:@selector(DoctypepickerCancel) forControlEvents:UIControlEventTouchUpInside];
         [Doctypeview addSubview:btnDoctypeCancel];
@@ -145,12 +161,33 @@
 }
 -(void)DoctypepickerCancel
 {
+    [UIView animateWithDuration:0.4f
+     // delay:0.1f
+     // options:UIViewAnimationTransitionNone
+                     animations:^{
+                         
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }
+     ];
     btnDocType.selected=NO;
     [Doctypeview removeFromSuperview];
 }
 -(void)DoctypepickerChange
 {
-    
+    [UIView animateWithDuration:0.4f
+     // delay:0.1f
+     // options:UIViewAnimationTransitionNone
+                     animations:^{
+                         
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }
+     ];
     if (DocType.length==0) {
         
         lblDocType.text=[ArrDocType objectAtIndex:0];
@@ -249,7 +286,7 @@
     
     
     [picker dismissViewControllerAnimated:YES completion:nil];
-    
+    btnAddDoc.selected=YES;
     
     
     

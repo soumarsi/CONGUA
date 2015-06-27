@@ -178,7 +178,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     int j=0;
- 
+ if(ArrShowProduct.count>0)
+ {
     if((tappedRow == section)  && (showAllSections==YES))
     {
         
@@ -205,7 +206,7 @@
         
     }
     
-   
+ }
    
    
     return j;
@@ -345,12 +346,13 @@
         showAllSections=NO;
         sender.selected=NO;
     }
-   
-    } completion:^(BOOL finished) {
-        
         tappedRow = sender.tag;
         //  NSLog(@"tag=========================================%ld",(long)tappedRow);
         [mytabview reloadData];
+   
+    } completion:^(BOOL finished) {
+        
+       
     }];
    
     

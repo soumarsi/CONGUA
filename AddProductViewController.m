@@ -122,39 +122,57 @@
 - (IBAction)ProductTypeClk:(id)sender
 {
     [txtproductName resignFirstResponder];
+   
     if (btnproductType.selected==NO)
     {
         btnproductType.selected=YES;
-        //    [mainscroll setContentOffset:CGPointMake(0,priceview.frame.origin.y+50) animated:YES];
+        //  [mainscroll setContentOffset:CGPointMake(0,20) animated:YES];
+        if (btnIsOtherInsured.selected==YES)
+        {
+            
+            if (self.view.frame.size.width==320)
+            {
+                [mainscroll setContentOffset:CGPointMake(0,110) animated:YES];
+            }
+            else
+            {
+                [mainscroll setContentOffset:CGPointMake(0,40) animated:YES];
+            }
+        }
+        else
+        {
+            [mainscroll setContentOffset:CGPointMake(0,10) animated:YES];
+        }
         [Producttypeview removeFromSuperview];
         
-        Producttypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width,self.view.frame.size.height)];
-        [Producttypeview setBackgroundColor:[[UIColor blackColor]colorWithAlphaComponent:0.8]];
-        [self.view addSubview:Producttypeview];
         
+   //     Producttypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, btnSubmit.frame.origin.y+btnSubmit.frame.size.height+10, self.view.frame.size.width,200)];
+        //    NSLog(@"height=%f",self.view.frame.size.height-200);
+             Producttypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.size.height-200, self.view.frame.size.width,200)];
+        [Producttypeview setBackgroundColor:[UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
+        [self.view addSubview:Producttypeview];
         
         
         //picker create
         
-        producttypepicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-125, 180, 250,150)];
+        producttypepicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-125, 10, 250,150)];
         //   amtpicker=[[UIPickerView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, 50, self.view.frame.size.width,150)];
         producttypepicker.delegate=self;
         producttypepicker.dataSource=self;
         [producttypepicker setBackgroundColor:[UIColor whiteColor]];
         [Producttypeview addSubview:producttypepicker];
         
-        btnProducttypesave=[[UIButton alloc] initWithFrame:CGRectMake(producttypepicker.frame.origin.x+producttypepicker.frame.size.width-50, producttypepicker.frame.origin.y-50, 50, 50)];
-        [btnProducttypesave setTitle:@"Save" forState:UIControlStateNormal];
-        btnProducttypesave.backgroundColor = [UIColor clearColor];
-        [btnProducttypesave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
+        btnProducttypesave=[[UIButton alloc] initWithFrame:CGRectMake(0,Producttypeview.frame.size.height-35.0,self.view.frame.size.width/2,35)];
+        btnProducttypesave.backgroundColor=[UIColor colorWithRed:(250.0f/255.0f) green:(58.0f/255.0f) blue:(47.0f/255.0f) alpha:1];
+        [btnProducttypesave setTitle: @"OK" forState: UIControlStateNormal];
+
         btnProducttypesave.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
         [btnProducttypesave addTarget:self action:@selector(producttypepickerChange) forControlEvents:UIControlEventTouchUpInside];
         [Producttypeview addSubview:btnProducttypesave];
         
-        btnproducttypeCancel=[[UIButton alloc] initWithFrame:CGRectMake(producttypepicker.frame.origin.x, producttypepicker.frame.origin.y-50, 60, 50)];
-        [btnproducttypeCancel setTitle:@"Cancel" forState:UIControlStateNormal];
-        btnproducttypeCancel.backgroundColor = [UIColor clearColor];
-        [btnproducttypeCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
+        btnproducttypeCancel=[[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2,Producttypeview.frame.size.height-35,self.view.frame.size.width/2,35)];
+        btnproducttypeCancel.backgroundColor=[UIColor colorWithRed:(20.0f/255.0f) green:(123.0f/255.0f) blue:(250.0f/255.0f) alpha:1];
+        [btnproducttypeCancel setTitle: @"CANCEL" forState: UIControlStateNormal];
         btnproducttypeCancel.titleLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:14.0];
         [btnproducttypeCancel addTarget:self action:@selector(producttypepickerCancel) forControlEvents:UIControlEventTouchUpInside];
         [Producttypeview addSubview:btnproducttypeCancel];
@@ -170,12 +188,33 @@
 }
 -(void)producttypepickerCancel
 {
+    [UIView animateWithDuration:0.4f
+     // delay:0.1f
+     // options:UIViewAnimationTransitionNone
+                     animations:^{
+                         
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }
+     ];
     btnproductType.selected=NO;
     [Producttypeview removeFromSuperview];
 }
 -(void)producttypepickerChange
 {
-    
+    [UIView animateWithDuration:0.4f
+     // delay:0.1f
+     // options:UIViewAnimationTransitionNone
+                     animations:^{
+                         
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }
+     ];
     if (ProductType.length==0) {
         
         lblProductType.text=[ArrProductType objectAtIndex:0];

@@ -18,7 +18,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    [self.mainscroll setContentSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, 520)];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     lblUserName.text=[@"Welcome " stringByAppendingString:[prefs valueForKey:@"FullName"]];
     CustomerCode=[prefs valueForKey:@"CustomerCode"];
