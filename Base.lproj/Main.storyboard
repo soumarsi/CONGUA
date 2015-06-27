@@ -1923,6 +1923,7 @@
                     </view>
                     <connections>
                         <outlet property="DocImage" destination="3Ac-c2-cIW" id="lVm-TL-1yp"/>
+                        <outlet property="btnAddDoc" destination="D41-eJ-CGS" id="AkS-PS-gAk"/>
                         <outlet property="btnDocType" destination="6xB-hM-ze7" id="Mfe-SH-JA3"/>
                         <outlet property="btnSubmit" destination="Zhg-rX-hdu" id="gGh-EL-IX8"/>
                         <outlet property="lblDesc" destination="S10-kr-KiW" id="leH-kH-EVm"/>
@@ -1990,7 +1991,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="enk-Jb-ZTB">
-                                        <rect key="frame" x="164.00000137522926" y="408" width="131" height="21"/>
+                                        <rect key="frame" x="164" y="408" width="131" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                         <state key="normal" title="Forgot Password">
@@ -3085,6 +3086,7 @@
                     </view>
                     <connections>
                         <outlet property="DocImage" destination="OZy-P1-Cyy" id="LJQ-6N-iVN"/>
+                        <outlet property="btnAddDoc" destination="Oer-9L-0CP" id="zCs-gQ-btk"/>
                         <outlet property="btnDocType" destination="hlr-dG-Wcs" id="TpV-Nb-s9d"/>
                         <outlet property="btnsubmit" destination="rC1-WJ-vXh" id="GdO-rp-AGH"/>
                         <outlet property="lblDesc" destination="jCz-Pb-rzM" id="hFo-D6-r3d"/>

@@ -13,7 +13,7 @@
 @end
 
 @implementation EditPortfolioDocViewController
-@synthesize lblDocType,lblDesc,txtDocName,txtVwDesc,DocImage,mainscroll,btnDocType,btnsubmit;
+@synthesize lblDocType,lblDesc,txtDocName,txtVwDesc,DocImage,mainscroll,btnDocType,btnsubmit,btnAddDoc;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -183,13 +183,26 @@
     if (btnDocType.selected==NO)
     {
         btnDocType.selected=YES;
-        //    [mainscroll setContentOffset:CGPointMake(0,priceview.frame.origin.y+50) animated:YES];
+        //  [mainscroll setContentOffset:CGPointMake(0,20) animated:YES];
+        if (btnAddDoc.selected==YES)
+        {
+            
+            if (self.view.frame.size.width==320)
+            {
+                [mainscroll setContentOffset:CGPointMake(0,140) animated:YES];
+            }
+            else
+            {
+                [mainscroll setContentOffset:CGPointMake(0,40) animated:YES];
+            }
+        }
         [Doctypeview removeFromSuperview];
         
-        Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width,self.view.frame.size.height)];
-        [Doctypeview setBackgroundColor:[[UIColor blackColor]colorWithAlphaComponent:0.8]];
-        [self.view addSubview:Doctypeview];
-        
+        Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, btnsubmit.frame.origin.y+btnsubmit.frame.size.height+10, self.view.frame.size.width,200)];
+        //    NSLog(@"height=%f",self.view.frame.size.height-200);
+        //     Doctypeview=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.size.height-200, self.view.frame.size.width,200)];
+        [Doctypeview setBackgroundColor:[UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
+        [mainscroll addSubview:Doctypeview];
         
         
         //picker create

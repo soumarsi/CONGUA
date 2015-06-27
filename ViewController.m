@@ -190,7 +190,7 @@ menu *menuview;
                         
                     }
                    //  ArrFilter = [NSMutableArray arrayWithCapacity:[ArrSummary count]];
-                    NSLog(@"summary name=%@",ArrSummary);
+                 //   NSLog(@"summary name=%@",ArrSummary);
                     [tabview reloadData];
                 }
                 else if ([[result valueForKey:@"Description"] isEqualToString:@"AuthToken has expired."])

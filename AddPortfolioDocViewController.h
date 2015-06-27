@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
 @property (weak, nonatomic) IBOutlet UIImageView *DocImage;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainscroll;
+@property (weak, nonatomic) IBOutlet UIButton *btnAddDoc;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 

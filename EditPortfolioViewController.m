@@ -413,6 +413,7 @@
     ArrPortDetail=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Personal",@"Other",nil];
     //  myarr=[NSMutableArray arrayWithObjects:@"KOLKATA",@"MUMBAI",@"CHENNAI",@"DELHI",@"JAIPUR",nil];
     
+    /*
     if(self.view.frame.size.width==414)
     {
         myview = [[UIView alloc] initWithFrame:CGRectMake(0,0,(self.view.frame.size.width),(self.view.frame.size.height))];
@@ -506,7 +507,118 @@
         [btn addTarget:self action:@selector(buttonInfo2:) forControlEvents:UIControlEventTouchUpInside];
         [btn1 addTarget:self action:@selector(buttonInfo3:) forControlEvents:UIControlEventTouchUpInside];
     }
-
+*/
+    
+    
+    [txtPostCode resignFirstResponder];
+    if(self.view.frame.size.width==375)
+    {
+        
+        if (btnHasInsure.selected==NO) {
+            //  [self.mainscroll setContentOffset:CGPointMake(0.0f,20.0f) animated:YES];
+            myview = [[UIView alloc] initWithFrame:CGRectMake(0,350,375,237)];
+        }
+        else if (btnHasInsure.selected==YES)
+        {
+            [self.mainscroll setContentOffset:CGPointMake(0.0f,210.0f) animated:YES];
+            myview = [[UIView alloc] initWithFrame:CGRectMake(0,540,375,237)];
+        }
+        [myview setBackgroundColor: [UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
+        
+        UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0,200,187,35)];
+        btn.backgroundColor=[UIColor colorWithRed:(250.0f/255.0f) green:(58.0f/255.0f) blue:(47.0f/255.0f) alpha:1];
+        [btn setTitle: @"OK" forState: UIControlStateNormal];
+        [myview addSubview:btn];
+        
+        UIButton *btn1=[[UIButton alloc]initWithFrame:CGRectMake(187,200,187,35)];
+        btn1.backgroundColor=[UIColor colorWithRed:(20.0f/255.0f) green:(123.0f/255.0f) blue:(250.0f/255.0f) alpha:1];
+        [btn1 setTitle: @"CANCEL" forState: UIControlStateNormal];
+        [myview addSubview:btn1];
+        
+        
+        mypicker =[[UIPickerView alloc]initWithFrame:CGRectMake(0,20,375,10)];
+        [myview addSubview:mypicker];
+        [mainscroll addSubview:myview];
+        
+        [mypicker setBackgroundColor: [UIColor colorWithRed:(250.0f/255.0f) green:(250.0f/255.0f) blue:(250.0f/255.0f) alpha:1]];
+        
+        
+        mypicker.delegate = self;
+        mypicker.dataSource=self;
+        
+        [btn addTarget:self action:@selector(buttonInfo2:) forControlEvents:UIControlEventTouchUpInside];
+        [btn1 addTarget:self action:@selector(buttonInfo3:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    else if (self.view.frame.size.width==320)
+    {
+        if (btnHasInsure.selected==NO) {
+            [self.mainscroll setContentOffset:CGPointMake(0.0f,20.0f) animated:YES];
+            myview = [[UIView alloc] initWithFrame:CGRectMake(0,265,320,237)];
+        }
+        else if (btnHasInsure.selected==YES)
+        {
+            [self.mainscroll setContentOffset:CGPointMake(0.0f,220.0f) animated:YES];
+            myview = [[UIView alloc] initWithFrame:CGRectMake(0,479,320,237)];
+        }
+        [myview setBackgroundColor: [UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
+        
+        UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0,200,160,35)];
+        btn.backgroundColor=[UIColor colorWithRed:(235.0f/255.0f) green:(64.0f/255.0f) blue:(38.0f/255.0f) alpha:1];
+        [btn setTitle: @"OK" forState: UIControlStateNormal];
+        [myview addSubview:btn];
+        
+        UIButton *btn1=[[UIButton alloc]initWithFrame:CGRectMake(160,200,160,35)];
+        btn1.backgroundColor=[UIColor colorWithRed:(20.0f/255.0f) green:(123.0f/255.0f) blue:(250.0f/255.0f) alpha:1];
+        [btn1 setTitle: @"CANCEL" forState: UIControlStateNormal];
+        [myview addSubview:btn1];
+        
+        
+        
+        mypicker =[[UIPickerView alloc]initWithFrame:CGRectMake(35,10,250,10)];
+        [myview addSubview:mypicker];
+        [mainscroll addSubview:myview];
+        
+        [mypicker setBackgroundColor: [UIColor colorWithRed:(250.0f/255.0f) green:(250.0f/255.0f) blue:(250.0f/255.0f) alpha:1]];
+        
+        
+        
+        mypicker.delegate = self;
+        mypicker.dataSource=self;
+        
+        [btn addTarget:self action:@selector(buttonInfo2:) forControlEvents:UIControlEventTouchUpInside];
+        [btn1 addTarget:self action:@selector(buttonInfo3:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else
+    {
+        [self.mainscroll setContentOffset:CGPointMake(0.0f,450.0f) animated:YES];
+        myview = [[UIView alloc] initWithFrame:CGRectMake(0,620,414,280)];
+        [myview setBackgroundColor: [UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1]];
+        
+        UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0,235,207,35)];
+        btn.backgroundColor=[UIColor colorWithRed:(235.0f/255.0f) green:(64.0f/255.0f) blue:(38.0f/255.0f) alpha:1];
+        [btn setTitle: @"OK" forState: UIControlStateNormal];
+        [myview addSubview:btn];
+        
+        
+        
+        UIButton *btn1=[[UIButton alloc]initWithFrame:CGRectMake(207,235,207,35)];
+        btn1.backgroundColor=[UIColor colorWithRed:(20.0f/255.0f) green:(123.0f/255.0f) blue:(250.0f/255.0f) alpha:1];
+        [btn1 setTitle: @"CANCEL" forState: UIControlStateNormal];
+        [myview addSubview:btn1];
+        mypicker =[[UIPickerView alloc]initWithFrame:CGRectMake(0,20,414,10)];
+        [myview addSubview:mypicker];
+        [mainscroll addSubview:myview];
+        
+        [mypicker setBackgroundColor: [UIColor colorWithRed:(250.0f/255.0f) green:(250.0f/255.0f) blue:(250.0f/255.0f) alpha:1]];
+        
+        
+        mypicker.delegate = self;
+        mypicker.dataSource=self;
+        
+        [btn addTarget:self action:@selector(buttonInfo2:) forControlEvents:UIControlEventTouchUpInside];
+        [btn1 addTarget:self action:@selector(buttonInfo3:) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 - (IBAction)HasInsureClk:(id)sender
@@ -903,6 +1015,18 @@
         lblPortfolioType.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
         lblPortfolioType.textColor=[UIColor blackColor];
     }
+    [UIView animateWithDuration:0.4f
+     // delay:0.1f
+     // options:UIViewAnimationTransitionNone
+                     animations:^{
+                         
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }
+     ];
+    
     [myview removeFromSuperview];
     
 }
@@ -914,16 +1038,17 @@
      // options:UIViewAnimationTransitionNone
                      animations:^{
                          
-                         //[self.mainscroll setContentOffset:CGPointMake(0.0f,200.0f)];
+                         [self.mainscroll setContentOffset:CGPointMake(0.0f,0.0f)];
                      }
                      completion:^(BOOL finished){
                          
                      }
      ];
+    
     self.navigationItem.rightBarButtonItem=nil;
-    lblPortfolioType.text=@"Portfolio Type";
+    //  _ptypelbl.text=@"Portfolio Type";
     lblPortfolioType.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
-    lblPortfolioType.textColor=[UIColor colorWithRed:(193.0/255.0) green:(193.0/255.0) blue:(193.0/255.0) alpha:1];
+    //   _ptypelbl.textColor=[UIColor colorWithRed:(193.0/255.0) green:(193.0/255.0) blue:(193.0/255.0) alpha:1];
     [myview removeFromSuperview];
     
 }
